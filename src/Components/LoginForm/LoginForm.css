@@ -1,0 +1,40 @@
+.login-form form label,
+.login-form form input {
+  display: block;
+}
+
+.login-form {
+  width: 400px;
+  height: 320px;
+  /* background-color: tomato; */
+}
+
+.login-error-container {
+  min-width: 100%;
+  min-height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: teal; */
+}
+
+.login-form form input {
+  font-family: "Poppins";
+  width: 82%;
+  border: none;
+  border-bottom: 2px solid rgb(235, 43, 85);
+  background-color: transparent;
+  margin: 20px;
+
+  transition: all 0.5s ease-in-out;
+}
+
+.login-form form input:focus {
+  border-bottom: 2px solid rgb(54, 120, 241);
+  outline: none;
+}
+
+.login-form form label {
+  font-size: 1.4rem;
+  margin: 20px;
+}

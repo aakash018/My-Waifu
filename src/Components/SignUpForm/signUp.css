@@ -1,0 +1,55 @@
+.signUp-form-container {
+  width: 450px;
+  height: 550px;
+  background-color: #f9d9d9;
+}
+
+.signUp-form-container .heading-signup {
+  text-align: center;
+  font-size: 2.5rem;
+
+  padding-top: 10px;
+}
+.signUp-form-container .error-signUp {
+  width: 100%;
+  min-height: 40px;
+  max-height: 80px;
+  /* background-color: black; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signUp-form-container label {
+  display: block;
+  font-size: 1.4rem;
+  margin-left: 50px;
+  margin-top: 10px;
+}
+
+.signUp-form-container input {
+  border: none;
+  border-bottom: 2px solid rgb(243, 47, 79);
+  background-color: transparent;
+  width: 70%;
+  font-size: 1.5rem;
+
+  font-family: "Poppins";
+
+  margin: 15px;
+  margin-left: 50px;
+
+  transition: all 0.7s ease-in-out;
+}
+
+.signUp-form-container input:focus {
+  outline: none;
+  border: none;
+  border-bottom: 2px solid rgb(20, 140, 220);
+}
+
+.have-an-acount {
+  margin: 30px;
+  margin-left: 50px;
+  font-size: 1.2rem;
+}

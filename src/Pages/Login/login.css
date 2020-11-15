@@ -1,0 +1,17 @@
+#login-page-wraper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 32px;
+}
+
+#login-cover-image {
+  overflow: hidden;
+  height: 600px;
+}
+
+#login-cover-image img {
+  width: 540px;
+  height: 700px;
+  object-fit: contain;
+}
