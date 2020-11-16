@@ -5,11 +5,15 @@ import "./home.css"
 function Home() {
 
 
-    const {currentUser} = useAuth()
+    const {currentUser, logout} = useAuth()
+
+    const handelLogout = async () => {
+        await logout()
+    }
 
     return (
         <div>
-          
+          <button onClick={handelLogout}>Logout</button>
         </div>
     )
 }

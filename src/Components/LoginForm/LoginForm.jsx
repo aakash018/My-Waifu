@@ -20,6 +20,7 @@ function LoginForm() {
     const [loading, setLoading] = useState(false)
     const { login } = useAuth()
 
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -42,19 +43,17 @@ function LoginForm() {
                     message: ""
                 })
             }
-
-            login(email.current?.value, password.current?.value)
-            .then(user => {
-                setLoading(false)
-                history.push("/")
-            })
-                .catch(e => {
+            try{
+            await login(email.current?.value, password.current?.value)
+            history.push("/")
+            }catch (e){
                 setLoading(false)
                 setError({
                     display: true,
                     message: e.message
                 })
-            }) 
+            }
+            
     }
     
 
@@ -66,11 +65,12 @@ function LoginForm() {
             </div>
             <form action="POST" onSubmit={handleSubmit}>
                 <label htmlFor="email">Username</label>
-                    <input type="text" id="email" ref={email}/>
+                    <input type="text" id="email" ref={email} className="input-element"/>
                 <label htmlFor="password">Password</label>
-                    <input type="password" id="password" ref={password}/>
+                    <input type="password" id="password" ref={password} className="input-element"/>
                 <MainButtons type="submit" text={"Log In"} disabled={loading}/>
             </form>
+            <section className="forgot-password" ><Link to="/forgot-password">Forgot Password</Link></section>
             <section className="make-an-account">Need an account! <Link to="/signup">SignUp</Link></section>
         </div>
     )
