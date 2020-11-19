@@ -18,7 +18,7 @@ function LoginForm() {
         message: ""
     })
     const [loading, setLoading] = useState(false)
-    const { login } = useAuth()
+    const { login, loginInWithGoogle } = useAuth()
 
     
 
@@ -56,7 +56,10 @@ function LoginForm() {
             
     }
     
-
+    const handleGoogleLogin = async() => {
+        await loginInWithGoogle()
+        history.push("/")
+    }
 
     return (
         <div className="login-form">
@@ -70,6 +73,7 @@ function LoginForm() {
                     <input type="password" id="password" ref={password} className="input-element"/>
                 <MainButtons type="submit" text={"Log In"} disabled={loading}/>
             </form>
+            <button onClick={handleGoogleLogin}>Login with google</button>
             <section className="forgot-password" ><Link to="/forgot-password">Forgot Password</Link></section>
             <section className="make-an-account">Need an account! <Link to="/signup">SignUp</Link></section>
         </div>

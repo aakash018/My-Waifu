@@ -1,7 +1,7 @@
 .signUp-form-container {
   width: 450px;
   height: 550px;
-  background-color: #f9d9d9;
+  background-color: var(--theme-light-color);
 }
 
 .signUp-form-container .heading-signup {
@@ -29,7 +29,7 @@
 
 .signUp-form-container input {
   border: none;
-  border-bottom: 2px solid rgb(243, 47, 79);
+  border-bottom: 2px solid var(--theme-color);
   background-color: transparent;
   width: 70%;
   font-size: 1.5rem;

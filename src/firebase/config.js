@@ -1,6 +1,7 @@
 import firebase from "firebase/app"
 
 import "firebase/auth"
+import "firebase/storage"
 
 const app = firebase.initializeApp({
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -13,6 +14,10 @@ const app = firebase.initializeApp({
     measurementId: process.env.REACT_APP_FIREBASE_MESSANGING_MEASUREMENT_ID
 })
 
-
+export const provider = new firebase.auth.GoogleAuthProvider()
+provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
 export const auth = app.auth()
+
+export const storage = app.storage()
+
 export default app

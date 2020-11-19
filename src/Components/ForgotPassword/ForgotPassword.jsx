@@ -27,19 +27,9 @@ function ForgotPassword() {
     const handleResetPassword = async (e) => {
         e.preventDefault()
 
-        setError({
-            display: false,
-            message: ""
-        })
-
-
         setLoading(true)
         try{
         await resetPassword(email.current.value)
-        setError({
-            display: false,
-            message: ""
-        })
         setMessage({
             display: true,
             message: "Email sent"
@@ -58,7 +48,7 @@ function ForgotPassword() {
     return (
         <div className="forgot-password-form" >
             <div className="headind-reset">Reset Password</div>
-            {error.display && <ErrorBox message={error.message}/>}
+            {error.display && <ErrorBox errorMessage={error.message}/>}
             {message.display && <Message message={message.message}/>}
             <form onSubmit={handleResetPassword}>
                 <label htmlFor="email" >Email</label>

@@ -9,21 +9,25 @@ import ForgotPassword from "./Components/ForgotPassword/ForgotPassword"
 
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
 import PrivateRoute from './Components/PrivateRoute';
+// import { StorageProvider } from './Context/StorageContext';
 
 function App() {
     
     return (
       <main>
           <AuthProvider>
+          
           <Router>
             <Switch>
-            {/* <Route path="/" component={Home} exact /> */}
+            
             <PrivateRoute path="/" component={Home} exact/>
+            
             <Route path="/login" component={Login} exact/>
             <Route path="/forgot-password" component={ForgotPassword} exact/>
             <Route path="/signup" component={SignUp} exact/>
           </Switch>
           </Router>
+          
           </AuthProvider>
       </main>
   )
