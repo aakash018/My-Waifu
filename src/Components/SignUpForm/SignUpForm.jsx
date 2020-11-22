@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react'
-import { Link } from "react-router-dom"
+import { Link, history, useHistory } from "react-router-dom"
 
 import {useAuth} from "../../Context/AuthContext"
 import ErrorBox from '../ErrorBox/ErrorBox'
@@ -21,8 +21,9 @@ function SignUpForm(){
 
     const [loading, setLoading] = useState(false)
 
-    const { signup } = useAuth()
-
+    const { signup, currentUser } = useAuth()
+    const history = useHistory()
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -54,19 +55,20 @@ function SignUpForm(){
                     message: ""
                 })
             }
-
-            signup(email.current?.value, password.current?.value, username.current.value).then(userCredentials => {
+            try{
+                const userCredentials = await signup(email.current?.value, password.current?.value, username.current.value)
+                await userCredentials.user.updateProfile({
+                         displayName: username.current.value
+                    })
                 setLoading(false)
-                userCredentials.user.updateProfile({
-                    displayName: username.current.value
-                })
-            }).catch(e => {
+                history.push("/profile-picture-upload")
+            } catch(e) {
                 setLoading(false)
                 setError({
                     display: true,
                     message: e.message
                 })
-            }) 
+            }
     }
     
 

@@ -10,20 +10,25 @@ export const StorageProvider = ({children}) => {
 
     // const storageRef = storage.ref()
 
-    const uploadImage = (image) => {
+    const uploadImage = (image, stateToSet) => {
         const uploadTask = storage.ref(`images/${image.name}`).put(image);
-
-        uploadTask.on("state_changed",
+        return uploadTask.on("state_changed",
         snapshot => {},
         error => {
-            console.log(error)
+            return console.log(error)
         },
-        () => {
-            storage.ref("images")
+        async () => {
+            const url = await storage.ref("images")
             .child(image.name)
-            .getDownloadURL().then(url => console.log(url))
+            .getDownloadURL()
+            stateToSet(url)
         }
         )
+        
+    }
+
+    const getImages = () => {
+        
     }
 
     const value = {
