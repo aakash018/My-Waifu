@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 
 import {storage} from "../firebase/config"
+import {useAuth} from "../Context/AuthContext"
 
 const StorageContext = React.createContext()
 
@@ -8,7 +9,7 @@ export const useStorage = () => useContext(StorageContext)
 
 export const StorageProvider = ({children}) => {
 
-    // const storageRef = storage.ref()
+    const { currentUser } = useAuth()
 
     const uploadImage = (image, stateToSet) => {
         const uploadTask = storage.ref(`images/${image.name}`).put(image);
@@ -27,12 +28,30 @@ export const StorageProvider = ({children}) => {
         
     }
 
-    const getImages = () => {
-        
+    const uploadBase64 = (image, imageName, stateToSet) => {
+        const uploadTask = storage.ref(`profilePicture/${currentUser.displayName}`).putString(image, 'data_url');
+        return uploadTask.on("state_changed",
+        snapshot => {},
+        error => {
+            return console.log(error)
+        },
+        async () => {
+            const url = await storage.ref("images")
+            .child(imageName)
+            .getDownloadURL()
+            stateToSet(url)
+        }
+        )
+         
     }
+
+    // const getImages = () => {
+        
+    // }
 
     const value = {
         uploadImage,
+        uploadBase64
     } 
 
     return (

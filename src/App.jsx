@@ -9,7 +9,7 @@ import ForgotPassword from "./Components/ForgotPassword/ForgotPassword"
 
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
 import PrivateRoute from './Components/PrivateRoute';
-import UploadProfilePicture from './Pages/UploadProfilePicture/UploadProfilePicture';
+import UploadProfilePicture from './Components/UploadProfilePicture/UploadProfilePicture';
 // import { StorageProvider } from './Context/StorageContext';
 
 function App() {

@@ -1,42 +1,53 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
+import Resizer from 'react-image-file-resizer';
+
 import { useStorage } from '../../Context/StorageContext'
 
+
 import "./imageUpload.css"
-function ImageUploader({ style, showChooseFile, chooseFileState, upload, imageURLState,previewImgState }) {
+
+
+const resizeFile = (file, width, height) => new Promise(resolve => {
+    Resizer.imageFileResizer(file, width, height, 'JPEG', 100, 0,
+    uri => {
+      resolve(uri);
+    },
+    'base64'
+    );
+});
+
+
+
+function ImageUploader({ style, imageURLState,previewImgState, fileInput, isProfilePicture }) {
 
     const [uploadedFile, setUploadedFile] = useState({})
 
-    const { uploadImage } = useStorage()
-
-    const fileInput = useRef(null)
+    const { uploadImage, uploadBase64 } = useStorage()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        uploadImage(uploadedFile, imageURLState)
+        uploadBase64(uploadedFile, "name", imageURLState)
     }
 
-    const handleInputChange = (e) => {
-        setUploadedFile(e.target.files[0])
+    const handleInputProfile = async (e) => {
+ 
+        const file = e.target.files[0]
+
+        const image = await resizeFile(file, 300, 300)
+
+        setUploadedFile(image)
         
-        const fileLoader = new FileReader()
-
-        fileLoader.onload = e => {
-            previewImgState(e.target.result)
-        }
-
-        fileLoader.readAsDataURL(e.target.files[0])
-
+        previewImgState(image)
     }
 
-    if(showChooseFile) {
-        // fileInput.current.click()
-        // chooseFileState(false)  
+    const handleInputPost = () => {
+        
     }
 
     return (
         <div id="image-uploader" style={style}>
             <form onSubmit={handleSubmit} >
-                <input type="file" id="image-uploader" onChange={handleInputChange} ref={fileInput}/>
+                <input type="file" id="image-uploader" onChange={isProfilePicture? handleInputProfile: handleInputPost} ref={fileInput}/>
                 <button type="submit">Upload</button>
             </form>
         </div>

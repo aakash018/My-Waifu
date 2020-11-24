@@ -3,5 +3,7 @@ html {
   --theme-color: rgb(235, 43, 85);
   --theme-light-color: #f9d9d9;
 
+  --secondary-theme-color: rgb(54, 120, 241);
+
   --home-bars-color: #d6d6d6;
 }
