@@ -28,7 +28,7 @@ export const StorageProvider = ({children}) => {
         
     }
 
-    const uploadBase64 = (image, imageName, stateToSet) => {
+    const uploadBase64 = (image, stateToSet) => {
         const uploadTask = storage.ref(`profilePicture/${currentUser.displayName}`).putString(image, 'data_url');
         return uploadTask.on("state_changed",
         snapshot => {},
@@ -36,8 +36,8 @@ export const StorageProvider = ({children}) => {
             return console.log(error)
         },
         async () => {
-            const url = await storage.ref("images")
-            .child(imageName)
+            const url = await storage.ref("profilePicture")
+            .child(currentUser.displayName)
             .getDownloadURL()
             stateToSet(url)
         }

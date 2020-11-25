@@ -9,18 +9,20 @@ function Home() {
 
 
     const {currentUser, logout} = useAuth()
-    const { storageData } = useStorage()
+    
 
     const handelLogout = async () => {
         await logout()
     }
 
-    console.log(storageData)
+    
 
     return (
         <div>
-            
+
           <button onClick={handelLogout} style={{position: "absolute", left: "50%"}}>Logout</button>
+          {console.log(currentUser)}
+          <img src={currentUser.photoURL} style={{position: "absolute", left: "20%"}}/>
           <WaifuOfTheDay />
           <InfoSection />
         </div>
