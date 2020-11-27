@@ -1,0 +1,15 @@
+#message-box-container {
+  background-color: rgb(235, 76, 102);
+  width: 80%;
+  min-height: 50px;
+  border-radius: 5px;
+  color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 1.4rem;
+
+  padding: 20px;
+}

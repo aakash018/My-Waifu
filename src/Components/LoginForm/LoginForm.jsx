@@ -2,8 +2,8 @@ import React, {useRef, useState} from 'react'
 import { Link, useHistory } from "react-router-dom"
 
 import {useAuth} from "../../Context/AuthContext"
-import ErrorBox from '../ErrorBox/ErrorBox'
 import MainButtons from "../MainButtons/MainButtons"
+import MessageBox from '../MessageBox/MessageBox'
 
 import "./LoginForm.css"
 
@@ -64,7 +64,7 @@ function LoginForm() {
     return (
         <div className="login-form">
             <div className="login-error-container">
-            {error.display && <ErrorBox errorMessage={error.message}/>}
+            {error.display && <MessageBox message={error.message} type={"error"}/>}
             </div>
             <form action="POST" onSubmit={handleSubmit}>
                 <label htmlFor="email">Username</label>

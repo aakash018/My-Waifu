@@ -1,0 +1,36 @@
+#upload-post {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 95%;
+  min-height: 50px;
+
+  position: relative;
+}
+
+.upload-post-intraction {
+  display: flex;
+  justify-content: space-around;
+
+  width: 100%;
+}
+
+.preview-uploaded-image {
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+}
+
+.preview-uploaded-image img {
+  width: 95%;
+  height: 400px;
+
+  margin: 15px 0 15px 0;
+
+  object-fit: contain;
+}

@@ -20,12 +20,24 @@ const resizeFile = (file, width, height) => new Promise(resolve => {
 
 function ImageUploader({ style, imageURLState,previewImgState, fileInput, isProfilePicture, uploadButton }) {
 
-    const [uploadedFile, setUploadedFile] = useState({})
+    const [uploadedFile, setUploadedFile] = useState(null)
 
     const { uploadImage, uploadBase64 } = useStorage()
 
-    const handleSubmit = async () => {
+    const handleProfilePictureSubmit = () => {
+        if(uploadedFile === null) {
+            return imageURLState("empty")
+        } else {
         uploadBase64(uploadedFile, imageURLState)
+        }
+    }
+
+    const handlePostSubmit = () => {
+        if(uploadedFile) {
+            return imageURLState("")
+        } else {
+        uploadImage(uploadedFile, imageURLState)
+        }
     }
 
     const handleInputProfile = async (e) => {
@@ -35,8 +47,15 @@ function ImageUploader({ style, imageURLState,previewImgState, fileInput, isProf
         previewImgState(image)
     }
 
-    const handleInputPost = () => {
-        
+    const handleInputPost = (e) => {
+        const image = e.target.files[0]
+        const reader = new FileReader()
+        reader.onload = e => {
+            previewImgState(e.target.result)
+        }
+        setUploadedFile(image)
+        reader.readAsDataURL(image)
+     
     }
 
     return (
@@ -47,7 +66,12 @@ function ImageUploader({ style, imageURLState,previewImgState, fileInput, isProf
                 id="image-uploader" 
                 onChange={isProfilePicture? handleInputProfile: handleInputPost} 
                 ref={fileInput}/>
-                <button type="button" onClick={() => handleSubmit()} ref={uploadButton} >Upload</button>
+                <button 
+                type="button" 
+                onClick={() => isProfilePicture? handleProfilePictureSubmit() : handlePostSubmit()} 
+                ref={uploadButton}>
+                    Upload
+                </button>
             </form>
         </div>
     )

@@ -49,7 +49,7 @@ function ForgotPassword() {
         <div className="forgot-password-form" >
             <div className="headind-reset">Reset Password</div>
             {error.display && <ErrorBox errorMessage={error.message}/>}
-            {message.display && <Message message={message.message}/>}
+            {message.display && <Message message={message.message} type={"message"}/>}
             <form onSubmit={handleResetPassword}>
                 <label htmlFor="email" >Email</label>
                 <input type="email" id="email" className="input-element" ref={email}/>
