@@ -31,11 +31,14 @@ function ImageUploader({ style, imageURLState,previewImgState, fileInput, isProf
         uploadBase64(uploadedFile, imageURLState)
         }
     }
-
+   
     const handlePostSubmit = () => {
-        if(uploadedFile) {
+        console.log(uploadedFile + " IMG")
+        if(uploadedFile == null) {
+            console.log("Yo Yo")
             return imageURLState("")
         } else {
+            console.log("Yo")
         uploadImage(uploadedFile, imageURLState)
         }
     }
@@ -48,11 +51,14 @@ function ImageUploader({ style, imageURLState,previewImgState, fileInput, isProf
     }
 
     const handleInputPost = (e) => {
+        
         const image = e.target.files[0]
+        
         const reader = new FileReader()
         reader.onload = e => {
             previewImgState(e.target.result)
         }
+        console.log(image)
         setUploadedFile(image)
         reader.readAsDataURL(image)
      
