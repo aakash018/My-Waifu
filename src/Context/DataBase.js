@@ -17,19 +17,14 @@ function DataBase({children}) {
         const postPayLoad = {
             postIMG: data,
             postedBy: currentUser.displayName,
+            postedTime: Date.now()
         }
 
-       await db.collection("posts").add(postPayLoad)
-       console.log("Stored")
+       return db.collection("posts").add(postPayLoad)
     }
 
-    const getPosts = () => {
-        return db.collection("posts").get()
-        // console.log(querySnapshot)
-        // querySnapshot.forEach(function(doc) {
-        //     // doc.data() is never undefined for query doc snapshots
-        //     console.log(doc.id, " => ", doc.data());
-        // });
+    const getPosts = (lastPosition) => {
+        return db.collection("posts").orderBy("postedTime").startAfter(lastPosition || 0).limit(4).get()
     }
     
 

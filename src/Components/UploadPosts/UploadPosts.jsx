@@ -3,6 +3,7 @@ import "./uploadPosts.css"
 
 import ImageUploader from '../ImageUploader/ImageUploader'
 import { useDatabase } from '../../Context/DataBase'
+import MessageBox from '../MessageBox/MessageBox'
 
 
 
@@ -11,8 +12,11 @@ function UploadPosts() {
     const { insertIntoDB } = useDatabase()
 
     const [imageURL, setImageURL] = useState("")
-
-    // const [uploadPost, setUploadPost] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState({
+        display: false,
+        errorMessage: ""
+    })
     const [previewImage, setPreviewImage] = useState(null)
 
     const fileInput = useRef(null)
@@ -20,20 +24,24 @@ function UploadPosts() {
     
     const handlePostUpload = () => {
         uploadButton.current.click()
-        // setUploadPost(true)
     }
 
     useEffect(() => {
-        console.log("img" + " " + imageURL)
-        if(imageURL !== "") {
-            console.log(1111)
-            insertIntoDB(imageURL)
-            // setUploadPost(false)
+        const uploadPost = async () => {
+            if(imageURL !== "") {
+                setLoading(true)
+                await insertIntoDB(imageURL)
+                setLoading(false)
+                setPreviewImage(false)
+            }
         }
+        uploadPost()
+// eslint-disable-next-line
     }, [imageURL, insertIntoDB])
 
     return (
         <div id="upload-post">
+            {error.display && <MessageBox type="error" message={error.errorMessage}/>}
             <ImageUploader
              imageURLState={setImageURL}
              previewImgState={setPreviewImage}
@@ -43,8 +51,8 @@ function UploadPosts() {
              style={{display: "none"}}
              /> 
              <section className="upload-post-intraction">
-                <button onClick={() => fileInput.current.click()} >Choose</button>
-                <button onClick={handlePostUpload} >Upload</button>
+                <button onClick={() => fileInput.current.click()} disabled={loading}>Choose</button>
+                {previewImage && <button onClick={handlePostUpload} disabled={loading}>Upload</button>}
                 {previewImage && <button onClick={() => setPreviewImage(null)} >Cancle</button>}
             </section>
             

@@ -19,27 +19,36 @@ export const StorageProvider = ({children}) => {
             return console.log(error)
         },
         async () => {
+            try{
             const url = await storage.ref("images")
             .child(image.name)
             .getDownloadURL()
             stateToSet(url)
+            } catch (e) {
+                console.log("Error Uploading Post" + e)
+            }
         }
         )
         
     }
 
     const uploadBase64 = (image, stateToSet) => {
-        const uploadTask = storage.ref(`profilePicture/${currentUser.displayName}`).putString(image, 'data_url');
-        return uploadTask.on("state_changed",
+        const imageDynamicName = `${currentUser.displayName}-${Date.now()}`
+        const uploadTask = storage.ref(`profilePicture/${imageDynamicName}`).putString(image, 'data_url');
+        uploadTask.on("state_changed",
         snapshot => {},
         error => {
             return console.log(error)
         },
         async () => {
+            try {
             const url = await storage.ref("profilePicture")
-            .child(currentUser.displayName)
-            .getDownloadURL()
+                                    .child(imageDynamicName)
+                                    .getDownloadURL()
             stateToSet(url)
+            } catch (e) {
+                console.log("Error Uploading ProfilePicture" , e)
+            }
         }
         )
          

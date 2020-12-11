@@ -25,9 +25,10 @@ function ImageUploader({ style, imageURLState,previewImgState, fileInput, isProf
     const { uploadImage, uploadBase64 } = useStorage()
 
     const handleProfilePictureSubmit = () => {
-        if(uploadedFile === null) {
+        if(uploadedFile === null || previewImgState === "wrongInput") {
             return imageURLState("empty")
         } else {
+            console.log("Upload Ran")
         uploadBase64(uploadedFile, imageURLState)
         }
     }
@@ -45,9 +46,16 @@ function ImageUploader({ style, imageURLState,previewImgState, fileInput, isProf
 
     const handleInputProfile = async (e) => {
         const file = e.target.files[0]
-        const image = await resizeFile(file, 300, 300)
-        setUploadedFile(image)
-        previewImgState(image)
+        console.log(file.type)
+        if(file.type === "image/png" || file.type === "image/jpeg"){
+            const image = await resizeFile(file, 300, 300)
+            setUploadedFile(image)
+            previewImgState(image)
+        } else {
+            console.log("hello")
+            return previewImgState("wrongInput")
+        }
+        
     }
 
     const handleInputPost = (e) => {

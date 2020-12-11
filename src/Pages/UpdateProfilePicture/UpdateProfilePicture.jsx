@@ -21,10 +21,9 @@ function UpdateProfilePicture() {
 
     useEffect(() => {
         const uploadIt = async () => {
-        if(uploadImage){
+        if(uploadImage && imageURL !== ""){
             
             if(imageURL === "empty"){
-                
                 return setError({
                     display: true,
                     errorMessage: "Empty Input"
@@ -35,6 +34,7 @@ function UpdateProfilePicture() {
                 await currentUser.updateProfile({
                 photoURL: imageURL
                 })
+                history.push("/")
             }catch (e){
                 setError({
                     display: true,
@@ -42,12 +42,11 @@ function UpdateProfilePicture() {
                 })
             }
         }
-        history.push("/")
         }
     }
-    setUploadImage(false)
+    // setUploadImage(false)
     uploadIt()        
-    }, [imageURL])
+    }, [imageURL, currentUser, history, uploadImage])
 
 
     const handleUploadPicture = async () => {
@@ -59,7 +58,6 @@ function UpdateProfilePicture() {
         <div>
             {error.display && <MessageBox message={error.errorMessage} type={"error"}/>}
             <UploadProfilePicture setImageURL={setImageURL} uploadImageButton={uploadImageButton}/>
-            
             <button onClick={() => handleUploadPicture()}>Upload</button>
         </div>
     )

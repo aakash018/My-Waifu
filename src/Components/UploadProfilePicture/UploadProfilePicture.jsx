@@ -1,6 +1,7 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 
 import ImageUploader from '../ImageUploader/ImageUploader'
+import MessageBox from '../MessageBox/MessageBox'
 
 //Style
 import "./profilePicture.css"
@@ -9,12 +10,27 @@ function UploadProfilePicture({setImageURL, uploadImageButton}) {
 
     // const [imageURL, setImageURL] = useState("")
     const [imagePreview, setImagePreview] = useState(null)
-   
+    const [error, setError] = useState({
+        display: false,
+        errorMessage: ""
+    })
     
     const fileInput = useRef(null)
 
-    
-
+    useEffect(() => {
+        if(imagePreview === "wrongInput"){
+            setError({
+                display:true,
+                errorMessage: "Bad Input. Only PNG and JPEG is supported"
+            })
+            setImagePreview(null)
+        } else if (typeof(imagePreview) === "string") {
+            setError({
+                display: false,
+                errorMessage: ""
+            })
+        }
+    },[imagePreview])
     return (
         <div>
             <ImageUploader 
@@ -25,8 +41,7 @@ function UploadProfilePicture({setImageURL, uploadImageButton}) {
             style={{display: "none"}} 
             isProfilePicture={true}
             />
-            {/* <button onClick={() => fileInput.current.click()}>Click</button> */}
-            
+            {error.display && <MessageBox type="error" message={error.errorMessage}/>}            
             <section id="profile-picture-uploader">
                 {!imagePreview && <button onClick={() => fileInput.current.click()} >+</button>}
                 {imagePreview && <img src={imagePreview} alt="Uploaded Preview"/>}

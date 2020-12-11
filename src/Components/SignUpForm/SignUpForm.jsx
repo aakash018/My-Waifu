@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react'
-import { Link, history, useHistory } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 
 import {useAuth} from "../../Context/AuthContext"
 import ErrorBox from '../ErrorBox/ErrorBox'
@@ -21,7 +21,7 @@ function SignUpForm(){
 
     const [loading, setLoading] = useState(false)
 
-    const { signup, currentUser } = useAuth()
+    const { signup } = useAuth()
     const history = useHistory()
     
 
