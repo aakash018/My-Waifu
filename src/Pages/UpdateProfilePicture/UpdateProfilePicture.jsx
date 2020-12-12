@@ -18,35 +18,44 @@ function UpdateProfilePicture() {
     const uploadImageButton = useRef(null)
 
     const history = useHistory()
+    const mounted = useRef(true)
+    console.log("Mounted:", mounted.current)
+    useEffect(() => { 
+        if(mounted.current){
+                console.log("Effect Ran")
+                const uploadIt = async () => {
+                if(uploadImage && imageURL !== ""){
+
+                    if(imageURL === "empty"){
+                        return setError({
+                            display: true,
+                            errorMessage: "Empty Input"
+                        })
+                    } else {
+                        setError({display: false, errorMessage: ""})
+                    try{
+                        await currentUser.updateProfile({
+                        photoURL: imageURL
+                        })
+                        history.push("/")
+                    }catch (e){
+                        setError({
+                            display: true,
+                            errorMessage: e.message
+                        })
+                    }
+                }
+                }
+            }
+        // setUploadImage(false)
+        uploadIt()
+        }   
+    }, [imageURL, currentUser, history, uploadImage])
+
 
     useEffect(() => {
-        const uploadIt = async () => {
-        if(uploadImage && imageURL !== ""){
-            
-            if(imageURL === "empty"){
-                return setError({
-                    display: true,
-                    errorMessage: "Empty Input"
-                })
-            } else {
-                setError({display: false, errorMessage: ""})
-            try{
-                await currentUser.updateProfile({
-                photoURL: imageURL
-                })
-                history.push("/")
-            }catch (e){
-                setError({
-                    display: true,
-                    errorMessage: e.message
-                })
-            }
-        }
-        }
-    }
-    // setUploadImage(false)
-    uploadIt()        
-    }, [imageURL, currentUser, history, uploadImage])
+        return () => mounted.current = false        
+    },[])
 
 
     const handleUploadPicture = async () => {

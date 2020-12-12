@@ -30,8 +30,9 @@ const PostContainer = () => {
 
     useEffect(() => {
         if(document !== null) {
-            document.addEventListener("scroll", () => handleScroll())
+            document.addEventListener("scroll", handleScroll)
         }
+        return () => document.removeEventListener("scroll", handleScroll)
     })
 
     const handleScroll = () => {

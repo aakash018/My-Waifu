@@ -2,13 +2,12 @@ import React, { useEffect, useRef, useState } from 'react'
 import "./uploadPosts.css"
 
 import ImageUploader from '../ImageUploader/ImageUploader'
-import { useDatabase } from '../../Context/DataBase'
 import MessageBox from '../MessageBox/MessageBox'
 
+import { useDatabase } from '../../Context/DataBase'
 
 
 function UploadPosts() {
-
     const { insertIntoDB } = useDatabase()
 
     const [imageURL, setImageURL] = useState("")
@@ -18,26 +17,64 @@ function UploadPosts() {
         errorMessage: ""
     })
     const [previewImage, setPreviewImage] = useState(null)
-
+    const [uploadPost, setUploadPost] = useState(false)
     const fileInput = useRef(null)
     const uploadButton = useRef(null)
+    const mounted = useRef(true)
     
     const handlePostUpload = () => {
+        setUploadPost(true)
         uploadButton.current.click()
     }
 
     useEffect(() => {
-        const uploadPost = async () => {
-            if(imageURL !== "") {
-                setLoading(true)
-                await insertIntoDB(imageURL)
-                setLoading(false)
-                setPreviewImage(false)
+        if(mounted.current){
+            if(uploadPost){
+            const uploadPost = async () => {
+                    try{
+                        if(imageURL === "") throw {message: "Empty Input"}
+                        console.log(previewImage)
+                        if(previewImage === "wrongInput") throw {message: "Bad Input! Only PNG and JPEG is supported."}
+                        setLoading(true)
+                        await insertIntoDB(imageURL)
+                        setLoading(false)
+                        setPreviewImage(false)
+                    }catch(e){
+                        setLoading(false)
+                        setError({
+                            display: true,
+                            errorMessage: e.message || "Error Uploadinng"
+                        })          
+                    } 
+                
+                }
+                uploadPost()
+                setUploadPost(false)
             }
+    }
+    return (
+        () => {
+            mounted.current = false;
         }
-        uploadPost()
+    )
 // eslint-disable-next-line
     }, [imageURL, insertIntoDB])
+
+
+    useEffect(() => {
+        if(previewImage === "wrongInput" ){
+            setPreviewImage(null)
+            setError({
+                display: true,
+                errorMessage: "Bad Input! Only PNG and JPEG is supported"
+            })
+        } else if(previewImage) {
+            setError({
+                display: false,
+                errorMessage: ""
+            })
+        }
+    }, [previewImage])
 
     return (
         <div id="upload-post">

@@ -16,20 +16,28 @@ function UploadProfilePicture({setImageURL, uploadImageButton}) {
     })
     
     const fileInput = useRef(null)
+    const mounted = useRef(true)
 
     useEffect(() => {
-        if(imagePreview === "wrongInput"){
-            setError({
-                display:true,
-                errorMessage: "Bad Input. Only PNG and JPEG is supported"
-            })
-            setImagePreview(null)
-        } else if (typeof(imagePreview) === "string") {
-            setError({
-                display: false,
-                errorMessage: ""
-            })
+        if(mounted.current){
+            if(imagePreview === "wrongInput"){
+                setError({
+                    display:true,
+                    errorMessage: "Bad Input. Only PNG and JPEG is supported"
+                })
+                setImagePreview(null)
+            } else if (typeof(imagePreview) === "string") {
+                setError({
+                    display: false,
+                    errorMessage: ""
+                })
+            }
         }
+        return (
+            () => {
+                mounted.current = false
+            }
+        )
     },[imagePreview])
     return (
         <div>

@@ -28,7 +28,6 @@ function ImageUploader({ style, imageURLState,previewImgState, fileInput, isProf
         if(uploadedFile === null || previewImgState === "wrongInput") {
             return imageURLState("empty")
         } else {
-            console.log("Upload Ran")
         uploadBase64(uploadedFile, imageURLState)
         }
     }
@@ -46,30 +45,29 @@ function ImageUploader({ style, imageURLState,previewImgState, fileInput, isProf
 
     const handleInputProfile = async (e) => {
         const file = e.target.files[0]
-        console.log(file.type)
         if(file.type === "image/png" || file.type === "image/jpeg"){
             const image = await resizeFile(file, 300, 300)
             setUploadedFile(image)
             previewImgState(image)
         } else {
-            console.log("hello")
             return previewImgState("wrongInput")
         }
         
     }
 
     const handleInputPost = (e) => {
-        
         const image = e.target.files[0]
-        
-        const reader = new FileReader()
-        reader.onload = e => {
-            previewImgState(e.target.result)
+        if(image.type === "image/png" || image.type === "image/jpeg" || image.type === "image/jpg"){
+            const reader = new FileReader()
+            reader.onload = e => {
+                previewImgState(e.target.result)
+            }
+            setUploadedFile(image)
+            reader.readAsDataURL(image)
+        } else {
+            console.log("It Ran")
+            previewImgState("wrongInput")
         }
-        console.log(image)
-        setUploadedFile(image)
-        reader.readAsDataURL(image)
-     
     }
 
     return (
