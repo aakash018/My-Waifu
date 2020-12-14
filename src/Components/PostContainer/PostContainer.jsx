@@ -19,7 +19,11 @@ const PostContainer = () => {
                 const querySnapshot = await getPosts(lastPostPosition.current)
                 const temporaryListOfURL  = querySnapshot.docs.map(doc => {
                     lastPostPosition.current = doc
-                    return doc.data().postIMG
+                    return {
+                       img: doc.data().postIMG,
+                       postedBy: doc.data().postedBy,
+                       posterProfilePicture: doc.data().posterProfilePic 
+                    }
                 })
                 setImageURL(p => p.concat(temporaryListOfURL))
             }
@@ -43,7 +47,7 @@ const PostContainer = () => {
 
     return (
         <div id="post-container" ref={postContainer} >
-          {posteImagesURL.map((url, index) => <PostCard imageURL={url} key={index} postedBy={"name"}/>)}
+          {posteImagesURL.map((url, index) => <PostCard imageURL={url.img} key={index} postedBy={url.postedBy} posterProfilePicture={url.posterProfilePicture}/>)}
         </div>
     )
 }

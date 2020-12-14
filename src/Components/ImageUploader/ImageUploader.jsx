@@ -38,8 +38,12 @@ function ImageUploader({ style, imageURLState,previewImgState, fileInput, isProf
             console.log("Yo Yo")
             return imageURLState("")
         } else {
+            try {
             console.log("Yo")
         uploadImage(uploadedFile, imageURLState)
+            } catch(e) {
+                console.log(e)
+            }
         }
     }
 
@@ -65,7 +69,6 @@ function ImageUploader({ style, imageURLState,previewImgState, fileInput, isProf
             setUploadedFile(image)
             reader.readAsDataURL(image)
         } else {
-            console.log("It Ran")
             previewImgState("wrongInput")
         }
     }

@@ -1,7 +1,7 @@
 #post-container {
   width: 50%;
   height: 100%;
-  background-color: rgb(77, 40, 211);
+  /* background-color: rgb(77, 40, 211); */
 
   display: flex;
   flex-direction: column;

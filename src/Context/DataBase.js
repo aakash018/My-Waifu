@@ -17,7 +17,8 @@ function DataBase({children}) {
         const postPayLoad = {
             postIMG: data,
             postedBy: currentUser.displayName,
-            postedTime: Date.now()
+            postedTime: Date.now(),
+            posterProfilePic: currentUser.photoURL
         }
 
        return db.collection("posts").add(postPayLoad)

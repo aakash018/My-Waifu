@@ -30,7 +30,7 @@ function UploadPosts() {
     useEffect(() => {
         if(mounted.current){
             if(uploadPost){
-            const uploadPost = async () => {
+            const uploadPostFunction = async () => {
                     try{
                         if(imageURL === "") throw {message: "Empty Input"}
                         console.log(previewImage)
@@ -41,6 +41,7 @@ function UploadPosts() {
                         setPreviewImage(false)
                     }catch(e){
                         setLoading(false)
+                        console.log(e)
                         setError({
                             display: true,
                             errorMessage: e.message || "Error Uploadinng"
@@ -48,15 +49,10 @@ function UploadPosts() {
                     } 
                 
                 }
-                uploadPost()
+                uploadPostFunction()
                 setUploadPost(false)
             }
     }
-    return (
-        () => {
-            mounted.current = false;
-        }
-    )
 // eslint-disable-next-line
     }, [imageURL, insertIntoDB])
 
@@ -75,6 +71,12 @@ function UploadPosts() {
             })
         }
     }, [previewImage])
+
+
+    //Just For CleanUp 
+    useEffect(() => {
+        return () => mounted.current = false
+    }, [])
 
     return (
         <div id="upload-post">

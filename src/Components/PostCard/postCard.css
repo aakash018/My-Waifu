@@ -1,13 +1,52 @@
 .post-card {
-  width: 400px;
-  height: 400px;
-
   position: relative;
+  min-width: 580px;
+  min-height: 604px;
+
+  width: 500px;
+  height: 650px;
+
+  background-color: rgb(252, 224, 228);
+  box-shadow: 0 0 20px rgba(61, 61, 61, 0.623);
+  border-radius: 10px;
+
+  margin: 30px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.post-info-container {
+  width: 100%;
+  height: 100px;
+  /* background-color: chocolate; */
+
+  /* position: absolute;
+  top: 0; */
+
+  margin-bottom: 30px;
 }
 
 .post-card img {
   width: 100%;
-  height: 100%;
+  height: 80%;
 
   object-fit: contain;
+}
+
+.poster-pic {
+  width: 60px;
+  height: 60px;
+
+  border-radius: 50%;
+  overflow: hidden;
+  background-position: center;
+  background-size: cover;
+  /* background-color: blue; */
+}
+
+.poster-name {
+  margin-left: 100px;
 }
