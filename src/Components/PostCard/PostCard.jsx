@@ -1,17 +1,26 @@
 import React from 'react'
 
 import "./postCard.css"
+import PostIntraction from './PostIntraction/PostIntraction'
 
-function PostContainer({imageURL, postedBy, posterProfilePicture}) {
+function PostContainer({imageURL, postedBy, posterProfilePicture, postedTime}) {
 
 
     return (
         <article className="post-card">
             <section className="post-info-container">
-                <div className="poster-pic" style={{backgroundImage: `url(${posterProfilePicture})`}} />
-                <div className="poster-name">{postedBy}</div>
+                <section className="poster-info">
+                    <div className="poster-pic" style={{backgroundImage: `url(${posterProfilePicture})`}} />
+                    <span className="poster-name">{postedBy}</span>
+                </section>
+                <div className="posted-time">{new Date(postedTime).toDateString()}</div>
             </section>
-            <img src={imageURL} alt={`${postedBy}'s post`} alt={`postFrom-${postedBy}`}/>
+            <section className="post-img">
+                <img src={imageURL} alt={`${postedBy}'s post`} alt={`postFrom-${postedBy}`}/>
+            </section>
+            <section className="post-intraction">
+                <PostIntraction />
+            </section>
         </article>
     )
 }

@@ -22,7 +22,8 @@ const PostContainer = () => {
                     return {
                        img: doc.data().postIMG,
                        postedBy: doc.data().postedBy,
-                       posterProfilePicture: doc.data().posterProfilePic 
+                       posterProfilePicture: doc.data().posterProfilePic,
+                       postedTime: doc.data().postedTime 
                     }
                 })
                 setImageURL(p => p.concat(temporaryListOfURL))
@@ -47,7 +48,16 @@ const PostContainer = () => {
 
     return (
         <div id="post-container" ref={postContainer} >
-          {posteImagesURL.map((url, index) => <PostCard imageURL={url.img} key={index} postedBy={url.postedBy} posterProfilePicture={url.posterProfilePicture}/>)}
+          {
+          posteImagesURL.map((url, index) => (
+          <PostCard 
+          imageURL={url.img} 
+          key={index} 
+          postedBy={url.postedBy} 
+          posterProfilePicture={url.posterProfilePicture}
+          postedTime={url.postedTime}
+          />
+          ))}
         </div>
     )
 }
