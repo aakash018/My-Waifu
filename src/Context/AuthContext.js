@@ -1,5 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import {auth, provider} from "../firebase/config"
+import { database as db} from "../firebase/config"
+
 
 const AuthContext = React.createContext()
 
@@ -13,6 +15,13 @@ function AuthProvider({children}) {
     const [currentUser, setCurrentUser] = useState()
     const [loading, setLoading] = useState(true)
 
+    const userAdditionalInfoInit = (uid) => {
+        const payLoad = {
+            likedPost: []
+        }
+        
+        return db.collection("userData").doc(uid).set(payLoad)
+    }
 
     const signup = (email, password) => {
         return auth.createUserWithEmailAndPassword(email, password)
@@ -52,8 +61,7 @@ function AuthProvider({children}) {
         logout,
         resetPassword,
         loginInWithGoogle,
-        
-        
+        userAdditionalInfoInit
     }
     
     return (

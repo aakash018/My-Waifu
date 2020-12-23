@@ -16,6 +16,7 @@ function Home() {
     const handelLogout = async () => {
         await logout()
     }
+    console.log(currentUser)
     return (
         <div className="homePage-Conainer">
             {console.log(currentUser)}

@@ -3,9 +3,9 @@ import React from 'react'
 import "./postCard.css"
 import PostIntraction from './PostIntraction/PostIntraction'
 
-function PostContainer({imageURL, postedBy, posterProfilePicture, postedTime}) {
+function PostContainer({imageURL, postedBy, posterProfilePicture, postedTime, likes, id}) {
 
-
+    
     return (
         <article className="post-card">
             <section className="post-info-container">
@@ -19,7 +19,7 @@ function PostContainer({imageURL, postedBy, posterProfilePicture, postedTime}) {
                 <img src={imageURL} alt={`${postedBy}'s post`} alt={`postFrom-${postedBy}`}/>
             </section>
             <section className="post-intraction">
-                <PostIntraction />
+                <PostIntraction likes={likes} id={id}/>
             </section>
         </article>
     )

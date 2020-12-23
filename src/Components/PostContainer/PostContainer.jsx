@@ -9,24 +9,29 @@ const PostContainer = () => {
 
 
     let lastPostPosition = useRef(null)
-    const postContainer = useRef(null)
 
 
     const { getPosts } = useDatabase()
     useEffect(() => {
         const fetchPosts = async() => {
-            if(loadMorePost){
-                const querySnapshot = await getPosts(lastPostPosition.current)
-                const temporaryListOfURL  = querySnapshot.docs.map(doc => {
-                    lastPostPosition.current = doc
-                    return {
-                       img: doc.data().postIMG,
-                       postedBy: doc.data().postedBy,
-                       posterProfilePicture: doc.data().posterProfilePic,
-                       postedTime: doc.data().postedTime 
-                    }
-                })
-                setImageURL(p => p.concat(temporaryListOfURL))
+            try {
+                if(loadMorePost){
+                    const querySnapshot = await getPosts(lastPostPosition.current)
+                    const temporaryListOfURL  = querySnapshot.docs.map(doc => {
+                        lastPostPosition.current = doc
+                        
+                        return {
+                        id: doc.id,
+                        img: doc.data().postIMG,
+                        postedBy: doc.data().postedBy,
+                        posterProfilePicture: doc.data().posterProfilePic,
+                        postedTime: doc.data().postedTime 
+                        }
+                    })
+                    setImageURL(p => p.concat(temporaryListOfURL))
+                }
+            } catch (e) {
+               console.log(e) 
             }
         }
         fetchPosts()
@@ -47,10 +52,11 @@ const PostContainer = () => {
     }
 
     return (
-        <div id="post-container" ref={postContainer} >
+        <div id="post-container" >
           {
           posteImagesURL.map((url, index) => (
           <PostCard 
+          id={url.id}
           imageURL={url.img} 
           key={index} 
           postedBy={url.postedBy} 

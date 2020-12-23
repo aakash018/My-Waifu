@@ -2,6 +2,7 @@ import React, {useRef, useState} from 'react'
 import { Link, useHistory } from "react-router-dom"
 
 import {useAuth} from "../../Context/AuthContext"
+import { useDatabase } from '../../Context/DataBase'
 import ErrorBox from '../ErrorBox/ErrorBox'
 import MainButton from "../MainButtons/MainButtons"
 
@@ -21,7 +22,7 @@ function SignUpForm(){
 
     const [loading, setLoading] = useState(false)
 
-    const { signup } = useAuth()
+    const { signup, userAdditionalInfoInit } = useAuth()
     const history = useHistory()
     
 
@@ -56,10 +57,12 @@ function SignUpForm(){
                 })
             }
             try{
+                console.log(email.current?.value, password.current?.value, username.current.value)
                 const userCredentials = await signup(email.current?.value, password.current?.value, username.current.value)
                 await userCredentials.user.updateProfile({
                          displayName: username.current.value
                     })
+                await userAdditionalInfoInit(userCredentials.user.uid)
                 setLoading(false)
                 history.push("/profile-picture-upload")
             } catch(e) {
